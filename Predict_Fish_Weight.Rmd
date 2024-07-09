@@ -20,6 +20,15 @@ require(tidyverse)
 
 # Predicting Fish Weight
 
+```{r}
+Fish <- Fish %>%
+
+mutate(across(where(is.character), as.factor))
+
+levels(Fish$Species)
+```
+
+
 
 ## Perch
 
