@@ -29,6 +29,48 @@ levels(Fish$Species)
 ```
 
 
+```{r}
+Bream <- filter(fish, Species == 
+
+"Bream")
+
+Bream <- select(Bream, -Species) 
+
+Parkki <- filter(fish, Species == 
+
+"Parkki")
+
+Parkki <- select(Parkki, -Species) 
+
+Perch <- filter(fish, Species == 
+
+"Perch")
+
+Perch <- select(Perch, -Species) 
+
+Pike <- filter(fish, Species == 
+
+"Pike")
+
+Pike <- select(Pike, -Species) 
+
+Roach <- filter(fish, Species == 
+
+"Roach")
+
+Roach <- select(Roach, -Species) 
+
+Smelt <- filter(fish, Species == 
+
+"Smelt")
+
+Smelt <- select(Smelt, -Species) 
+
+Whitefish <- filter(fish, Species == 
+
+"Whitefish")
+
+Whitefish <- select(Whitefish, -Species)
 
 ## Perch
 
@@ -50,3 +92,4 @@ levels(Fish$Species)
 ### Best Two regressor model
 
 ## Final Summary Statements
+```
