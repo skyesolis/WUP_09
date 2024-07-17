@@ -16,6 +16,8 @@ output:
 ```{r include=FALSE,echo=FALSE}
 require(tigerstats)
 require(tidyverse)
+require(car)
+require(leaps)
 ```
 
 # Predicting Fish Weight
@@ -28,49 +30,54 @@ mutate(across(where(is.character), as.factor))
 levels(Fish$Species)
 ```
 
+```{r}
+fish <- read.csv(file = "Fish.csv)
+```
 
 ```{r}
-Bream <- filter(fish, Species == 
+Bream <- filter(Fish, Species == 
 
 "Bream")
 
 Bream <- select(Bream, -Species) 
 
-Parkki <- filter(fish, Species == 
+Parkki <- filter(Fish, Species == 
 
 "Parkki")
 
 Parkki <- select(Parkki, -Species) 
 
-Perch <- filter(fish, Species == 
+Perch <- filter(Fish, Species == 
 
 "Perch")
 
 Perch <- select(Perch, -Species) 
 
-Pike <- filter(fish, Species == 
+Pike <- filter(Fish, Species == 
 
 "Pike")
 
 Pike <- select(Pike, -Species) 
 
-Roach <- filter(fish, Species == 
+Roach <- filter(Fish, Species == 
 
 "Roach")
 
 Roach <- select(Roach, -Species) 
 
-Smelt <- filter(fish, Species == 
+Smelt <- filter(Fish, Species == 
 
 "Smelt")
 
 Smelt <- select(Smelt, -Species) 
 
-Whitefish <- filter(fish, Species == 
+Whitefish <- filter(Fish, Species == 
 
 "Whitefish")
 
 Whitefish <- select(Whitefish, -Species)
+
+
 
 ## Perch
 
@@ -93,3 +100,85 @@ Whitefish <- select(Whitefish, -Species)
 
 ## Final Summary Statements
 ```
+
+
+```{r}
+regsubsets.out <-
+
+    regsubsets(Weight ~ .,
+
+               data = Perch,
+
+               nbest = 
+
+1,       
+
+# 1 best model for each number of predictors
+
+               nvmax = 
+
+NULL,    
+
+# NULL for no limit on number of variables
+
+               force.in = 
+
+NULL, force.out = 
+
+NULL,
+
+               method = 
+
+"exhaustive")
+
+summary.out <- summary(regsubsets.out)
+
+as.data.frame(summary.out$outmat)
+```
+
+
+```{r}
+
+library(leaps)
+
+regsubsets.out <-
+
+    regsubsets(Weight ~ .,
+
+               data = Perch,
+
+               nbest = 1,       # 1 best model for each number of predictors
+
+               nvmax = NULL,    # NULL for no limit on number of variables
+
+               force.in = NULL, force.out = NULL,
+
+               method = "exhaustive")
+
+ 
+
+summary.out <- summary(regsubsets.out)
+
+as.data.frame(summary.out$outmat)
+
+library(car)
+
+subsets(regsubsets.out,statistic="adjr2",legend="topright",main="Adjusted R^2")
+
+```
+
+```{r}
+Perchmodel <- lm(Weight~Height+Width, data=Perch)
+summary.lm(Perchmodel)
+```
+
+
+The best model based on this growth is the Perch model.
+
+
+The best models are the two element models of height and width. 
+
+to find out the comparative data between, Perch, Pike and Roach, we used the leap program to tind out the best regressor models.
+Using leaps we can display all the appropriate data, such as the Adjusted R squared number to find out which model when compared to the variable weight had an impact on the outcome.
+In this case we took note of the Adjusted R sgaured number and the best two regressor models in each fish species.
+
